@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
-: "${MONGODB_HOST:?MONGODB_HOST is required}"
+[ -f /data/params ] && set -a && source /data/params && set +a
 
-MONGO_URL="mongodb://${MONGODB_HOST}:27017/users"
+: "${MONGO_URL:?MONGO_URL is required}"
 
-echo "Waiting for MongoDB at ${MONGODB_HOST}..."
+echo "Waiting for MongoDB..."
 until mongosh "$MONGO_URL" --eval "db.adminCommand('ping')" --quiet 2>/dev/null; do
     echo "MongoDB not ready, retrying in 2s..."
     sleep 2
