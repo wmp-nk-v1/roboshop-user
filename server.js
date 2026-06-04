@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
 const { MongoClient, ObjectId } = require('mongodb');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -7,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(morgan('{"time":":date[iso]","method":":method","path":":url","status"::status,"latency_ms"::response-time,"bytes"::res[content-length]}'));
 
 const MONGO_URL = process.env.MONGO_URL || 'mongodb://mongodb:27017/users';
 const JWT_SECRET = process.env.JWT_SECRET || 'roboshop-secret-key';
